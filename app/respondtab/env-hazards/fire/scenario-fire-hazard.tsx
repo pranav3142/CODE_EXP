@@ -1,11 +1,6 @@
-import React, { useState ,useLayoutEffect } from 'react';
+import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView } from 'react-native';
 import { Stack, useRouter } from 'expo-router';
-import { useNavigation } from '@react-navigation/native';
-
-const router = useRouter();
-
-
 
 const options = [
   'Call the building manager',
@@ -14,20 +9,22 @@ const options = [
   'Wait and see'
 ];
 
+const correctIndex = 1;
+
 export default function FireHazardScenario() {
-    const navigation = useNavigation();
-        
-          useLayoutEffect(() => {
-            navigation.setOptions({
-              title: 'Response Training',
-              headerStyle: {
-                backgroundColor: '#fff',
-              },
-              headerTintColor: '#25292e',
-            });
-          }, [navigation]);
-    
   const [selected, setSelected] = useState(null);
+  const [submitted, setSubmitted] = useState(false);
+  const router = useRouter();
+
+  const handlePress = (index: number) => {
+    setSelected(index);
+    setSubmitted(true);
+    if (index === correctIndex) {
+      setTimeout(() => {
+        router.push('/respondtab/env-hazards/fire/fire-success');
+      }, 500);
+    }
+  };
 
   return (
     <ScrollView style={styles.container}>
@@ -43,15 +40,22 @@ export default function FireHazardScenario() {
         You spotted a fire breaking out from a stall at an exhibition in a mall. What do you do first?
       </Text>
 
-      {options.map((option, index) => (
-        <TouchableOpacity
-          key={index}
-          style={[styles.option, selected === index && styles.optionSelected]}
-          onPress={() => setSelected(index)}>
-          <Text style={styles.optionText}>{option}</Text>
-          <View style={[styles.radio, selected === index && styles.radioSelected]} />
-        </TouchableOpacity>
-      ))}
+      {options.map((option, index) => {
+        const isSelected = selected === index;
+        const isWrong = submitted && isSelected && index !== correctIndex;
+
+        return (
+          <TouchableOpacity
+            key={index}
+            style={[styles.option, isSelected && styles.optionSelected, isWrong && styles.optionWrong]}
+            onPress={() => handlePress(index)}>
+            <Text style={styles.optionText}>{option}</Text>
+            <View
+              style={[styles.radio, isSelected && styles.radioSelected, isWrong && styles.radioWrong]}
+            />
+          </TouchableOpacity>
+        );
+      })}
     </ScrollView>
   );
 }
@@ -101,11 +105,18 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#999',
   },
+  optionSelected: {
+    borderColor: '#007AFF',
+  },
   radioSelected: {
     backgroundColor: '#007AFF',
     borderColor: '#007AFF',
   },
-  optionSelected: {
-    borderColor: '#007AFF',
+  optionWrong: {
+    borderColor: '#ff4d4d',
+  },
+  radioWrong: {
+    backgroundColor: '#ff4d4d',
+    borderColor: '#ff4d4d',
   },
 });

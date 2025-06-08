@@ -45,7 +45,7 @@ export default function EnvironmentalHazardsScreen() {
       </Text>
 
       {scenarios.map((scenario, index) => (
-        <TouchableOpacity key={index} style={styles.scenarioButton} onPress={() => router.push('/respondtab/scenario-fire-hazard')}>
+        <TouchableOpacity key={index} style={styles.scenarioButton} onPress={() => router.push('/respondtab/env-hazards/fire/scenario-fire-hazard')}>
           <Text style={styles.buttonText}>{scenario}</Text>
         </TouchableOpacity>
       ))}
