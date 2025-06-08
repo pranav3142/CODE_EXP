@@ -1,8 +1,11 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { useRouter } from 'expo-router';
 
 export default function HomeScreen() {
+  const router = useRouter();
+
   return (
     <ScrollView style={styles.container}>
       <View style={styles.headerIcons}>
@@ -19,7 +22,7 @@ export default function HomeScreen() {
 
       <Text style={styles.sectionTitle}>What would you like to do today?</Text>
 
-      <TouchableOpacity style={[styles.actionCard, { backgroundColor: '#41C5B9' }]}>
+      <TouchableOpacity style={[styles.actionCard, { backgroundColor: '#41C5B9' }]} onPress={() => router.push('../respondtab/cat')}>
         <View style={styles.cardContent}>
           <View>
             <Text style={styles.cardTitle}>Respond</Text>
