@@ -9,7 +9,7 @@ export default function TabLayout() {
       screenOptions={{
         headerShown: false,
         tabBarStyle: {
-          height: 70,
+          height: 90,
           paddingBottom: 10,
           paddingTop: 10,
           backgroundColor: '#fff',
@@ -64,9 +64,9 @@ const styles = StyleSheet.create({
   centerTab: {
     backgroundColor: '#007AFF',
     borderRadius: 35,
-    width: 60,
-    height: 60,
-    marginTop: -20,
+    width: 70,
+    height: 70,
+    marginTop: -10,
     alignItems: 'center',
     justifyContent: 'center',
   },
