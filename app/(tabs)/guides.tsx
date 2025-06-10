@@ -7,20 +7,20 @@ const guides = [
   {
     title: 'First Aid Basics',
     category: 'Skills',
-    image: 'https://upload.wikimedia.org/wikipedia/commons/5/5e/SAMU_First_Aid_training.jpg',
+    image: 'https://i.ibb.co/XkjCZ9nL/mathurin-napoly-matnapo-5-K5gy-Pv-KC80-unsplash.jpg',
     isNew: true,
     route: 'guide-first-aid',
   },
   {
     title: 'Spotted a Fire?',
     category: 'Emergency Response',
-    image: 'https://upload.wikimedia.org/wikipedia/commons/d/d1/Building_on_Fire.jpg',
+    image: 'https://static1.straitstimes.com.sg/s3fs-public/articles/2022/05/27/ads-fire-27052022.jpg?VersionId=9GnrWKeAV1J_jvZcqeYBRgZ1aq0Awz0R',
     route: 'guide-fire',
   },
   {
     title: 'Reaching out to a Troubled Friend',
     category: 'Emergency Prevention',
-    image: 'https://upload.wikimedia.org/wikipedia/commons/b/b7/Hand_in_Pool.jpg',
+    image: 'https://images.unsplash.com/photo-1664899303670-9b7662545a34?q=80&w=3918&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     route: 'guide-friend',
   },
 ];

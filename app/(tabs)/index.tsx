@@ -43,7 +43,7 @@ export default function HomeScreen() {
           <Icon name="run" size={130} color="white" style={styles.cardIcon} />
         </TouchableOpacity>
 
-        <TouchableOpacity style={[styles.actionCard, { backgroundColor: '#F35C5C' }]}>
+        <TouchableOpacity style={[styles.actionCard, { backgroundColor: '#F35C5C' }]} onPress={() => router.push('../reporttab/cat')}>
           <View style={styles.cardContent}>
             <View>
               <Text style={styles.cardTitle}>Report</Text>
