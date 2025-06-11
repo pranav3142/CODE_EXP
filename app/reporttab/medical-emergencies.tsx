@@ -8,38 +8,75 @@ import {
   TextInput,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { useNavigation } from 'expo-router'; 
+import { useNavigation } from 'expo-router';
 
 export default function CreateReportScreen() {
   const navigation = useNavigation();
 
-  const [selectedType, setSelectedType] = useState<string | null>(null);
+  const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
+  const [selectedInjuries, setSelectedInjuries] = useState<string[]>([]);
+  const [selectedSeverity, setSelectedSeverity] = useState<string | null>(null);
+  const [selectedServices, setSelectedServices] = useState<string[]>([]);
 
-  const reportTypes = [
-    'BURN',
-    'BLEEDING',
-    'FAINTING',
-    'STROKE',
-    'HEART ATTACK',
-    'SEIZURE',
-    'KNOCK ON HEAD',
-  ];
+  const [isTypeDropdownOpen, setIsTypeDropdownOpen] = useState(true);
+  const [isInjuryDropdownOpen, setIsInjuryDropdownOpen] = useState(true);
+  const [isSeverityDropdownOpen, setIsSeverityDropdownOpen] = useState(true);
+  const [isServicesDropdownOpen, setIsServicesDropdownOpen] = useState(true);
+
+  const reportTypes = ['FIRE', 'FLOOD', 'HAZARDEOUS MATERIAL', 'HEAT WARNING', 'OTHERS'];
+  const injuryOptions = ['BURN', 'BLEEDING', 'FAINTING', 'STROKE', 'HEART ATTACK', 'SEIZURE', 'KNOCK ON HEAD', 'NIL'];
+  const severities = ['MILD', 'MODERATE', 'SEVERE', 'CRITICAL'];
+  const services = ['AMBULANCE', 'FIRE ENGINE', 'POLICE'];
 
   useLayoutEffect(() => {
     navigation.setOptions({
-      title: 'Create a Report',
+      title: 'Report Training',
       headerStyle: {
         backgroundColor: '#fff',
       },
       headerTintColor: '#25292e',
-      headerBackTitleVisible: false,
-      headerLeft: () => (
-        <TouchableOpacity onPress={() => navigation.goBack()} style={{ marginLeft: 16 }}>
-          <Ionicons name="chevron-back" size={24} color="#25292e" />
-        </TouchableOpacity>
-      ),
     });
   }, [navigation]);
+
+  const toggleDropdown = (dropdown: string) => {
+    switch (dropdown) {
+      case 'type':
+        setIsTypeDropdownOpen(!isTypeDropdownOpen);
+        break;
+      case 'injury':
+        setIsInjuryDropdownOpen(!isInjuryDropdownOpen);
+        break;
+      case 'severity':
+        setIsSeverityDropdownOpen(!isSeverityDropdownOpen);
+        break;
+      case 'services':
+        setIsServicesDropdownOpen(!isServicesDropdownOpen);
+        break;
+      default:
+        break;
+    }
+  };
+
+  const handleSingleSelect = (
+    value: string,
+    setter: React.Dispatch<React.SetStateAction<string | null>>,
+    dropdownCloser: React.Dispatch<React.SetStateAction<boolean>>
+  ) => {
+    setter(value);
+    dropdownCloser(false);
+  };
+
+  const handleMultiSelect = (
+    value: string,
+    currentSelections: string[],
+    setter: React.Dispatch<React.SetStateAction<string[]>> 
+  ) => {
+    if (currentSelections.includes(value)) {
+      setter(currentSelections.filter((item) => item !== value));
+    } else {
+      setter([...currentSelections, value]);
+    }
+  };
 
   return (
     <ScrollView style={styles.container}>
@@ -52,52 +89,215 @@ export default function CreateReportScreen() {
         Fill us in on the key details, and we’ll be right with you.
       </Text>
 
+      {/* Type Dropdown (Multi-select) */}
       <View style={styles.section}>
-        <Text style={styles.sectionTitle}>Type</Text>
-        <Ionicons name="chevron-down" size={20} color="#999" style={styles.dropdownIcon} />
-        <View style={styles.typeButtonsContainer}>
-          {reportTypes.map((type, index) => (
-            <TouchableOpacity
-              key={index}
-              style={[
-                styles.typeButton,
-                selectedType === type && styles.typeButtonSelected,
-              ]}
-              onPress={() => setSelectedType(type)}
-            >
-              <Text
+        <TouchableOpacity
+          style={styles.dropdownHeader}
+          onPress={() => toggleDropdown('type')}
+        >
+          <Text style={styles.sectionTitle}>Type</Text>
+          <Ionicons
+            name={isTypeDropdownOpen ? 'chevron-up' : 'chevron-down'}
+            size={20}
+            color="#999"
+          />
+        </TouchableOpacity>
+        {isTypeDropdownOpen && (
+          <View style={styles.typeButtonsContainer}>
+            {reportTypes.map((type, index) => (
+              <TouchableOpacity
+                key={index}
                 style={[
-                  styles.typeButtonText,
-                  selectedType === type && styles.typeButtonTextSelected,
+                  styles.typeButton,
+                  // Apply selected style if the type is present in the selectedTypes array
+                  selectedTypes.includes(type) && styles.typeButtonSelected,
                 ]}
+                onPress={() =>
+                  // Use handleMultiSelect for 'Type'
+                  handleMultiSelect(type, selectedTypes, setSelectedTypes)
+                }
               >
-                {type}
-              </Text>
-            </TouchableOpacity>
-          ))}
-        </View>
+                <Text
+                  style={[
+                    styles.typeButtonText,
+                    // Apply selected text style if the type is present in the selectedTypes array
+                    selectedTypes.includes(type) && styles.typeButtonTextSelected,
+                  ]}
+                >
+                  {type}
+                </Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+        )}
+        {/* Display selected types when dropdown is closed */}
+        {selectedTypes.length > 0 && !isTypeDropdownOpen && (
+          <Text style={styles.selectedOptionText}>
+           {selectedTypes.join(', ')}
+          </Text>
+        )}
       </View>
 
+      {/* Injury Dropdown (Multi-select) */}
       <View style={styles.section}>
-        <Text style={styles.sectionTitle}>Severity</Text>
-        <Ionicons name="chevron-down" size={20} color="#999" style={styles.dropdownIcon} />
+        <TouchableOpacity
+          style={styles.dropdownHeader}
+          onPress={() => toggleDropdown('injury')}
+        >
+          <Text style={styles.sectionTitle}>Injury</Text>
+          <Ionicons
+            name={isInjuryDropdownOpen ? 'chevron-up' : 'chevron-down'}
+            size={20}
+            color="#999"
+          />
+        </TouchableOpacity>
+        {isInjuryDropdownOpen && (
+          <View style={styles.typeButtonsContainer}>
+            {injuryOptions.map((inj, index) => (
+              <TouchableOpacity
+                key={index}
+                style={[
+                  styles.typeButton,
+                  // Apply selected style if the injury is present in the selectedInjuries array
+                  selectedInjuries.includes(inj) && styles.typeButtonSelected,
+                ]}
+                onPress={() =>
+                  // Use handleMultiSelect for 'Injury'
+                  handleMultiSelect(inj, selectedInjuries, setSelectedInjuries)
+                }
+              >
+                <Text
+                  style={[
+                    styles.typeButtonText,
+                    // Apply selected text style if the injury is present in the selectedInjuries array
+                    selectedInjuries.includes(inj) && styles.typeButtonTextSelected,
+                  ]}
+                >
+                  {inj}
+                </Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+        )}
+        {/* Display selected injuries when dropdown is closed */}
+        {selectedInjuries.length > 0 && !isInjuryDropdownOpen && (
+          <Text style={styles.selectedOptionText}> {selectedInjuries.join(', ')}</Text>
+        )}
       </View>
 
+      {/* Severity Dropdown (Single-select) */}
       <View style={styles.section}>
-        <Text style={styles.sectionTitle}>Services Required</Text>
-        <Ionicons name="chevron-down" size={20} color="#999" style={styles.dropdownIcon} />
+        <TouchableOpacity
+          style={styles.dropdownHeader}
+          onPress={() => toggleDropdown('severity')}
+        >
+          <Text style={styles.sectionTitle}>Severity</Text>
+          <Ionicons
+            name={isSeverityDropdownOpen ? 'chevron-up' : 'chevron-down'}
+            size={20}
+            color="#999"
+          />
+        </TouchableOpacity>
+        {isSeverityDropdownOpen && (
+          <View style={styles.typeButtonsContainer}>
+            {severities.map((severity, index) => (
+              <TouchableOpacity
+                key={index}
+                style={[
+                  styles.typeButton,
+                  // Apply selected style if the severity matches the single selectedSeverity
+                  selectedSeverity === severity && styles.typeButtonSelected,
+                ]}
+                onPress={() =>
+                  // Use handleSingleSelect for 'Severity'
+                  handleSingleSelect(
+                    severity,
+                    setSelectedSeverity,
+                    setIsSeverityDropdownOpen
+                  )
+                }
+              >
+                <Text
+                  style={[
+                    styles.typeButtonText,
+                    // Apply selected text style if the severity matches the single selectedSeverity
+                    selectedSeverity === severity &&
+                      styles.typeButtonTextSelected,
+                  ]}
+                >
+                  {severity}
+                </Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+        )}
+        {/* Display selected severity when dropdown is closed */}
+        {selectedSeverity && !isSeverityDropdownOpen && (
+          <Text style={styles.selectedOptionText}>{selectedSeverity}</Text>
+        )}
       </View>
 
+      {/* Services Required Dropdown (Multi-select) */}
+      <View style={styles.section}>
+        <TouchableOpacity
+          style={styles.dropdownHeader}
+          onPress={() => toggleDropdown('services')}
+        >
+          <Text style={styles.sectionTitle}>Services Required</Text>
+          <Ionicons
+            name={isServicesDropdownOpen ? 'chevron-up' : 'chevron-down'}
+            size={20}
+            color="#999"
+          />
+        </TouchableOpacity>
+        {isServicesDropdownOpen && (
+          <View style={styles.typeButtonsContainer}>
+            {services.map((service, index) => (
+              <TouchableOpacity
+                key={index}
+                style={[
+                  styles.typeButton,
+                  // Apply selected style if the service is present in the selectedServices array
+                  selectedServices.includes(service) && styles.typeButtonSelected,
+                ]}
+                onPress={() =>
+                  // Use handleMultiSelect for 'Services'
+                  handleMultiSelect(service, selectedServices, setSelectedServices)
+                }
+              >
+                <Text
+                  style={[
+                    styles.typeButtonText,
+                    // Apply selected text style if the service is present in the selectedServices array
+                    selectedServices.includes(service) && styles.typeButtonTextSelected,
+                  ]}
+                >
+                  {service}
+                </Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+        )}
+        {/* Display selected services when dropdown is closed */}
+        {selectedServices.length > 0 && !isServicesDropdownOpen && (
+          <Text style={styles.selectedOptionText}>
+            {selectedServices.join(', ')}
+          </Text>
+        )}
+      </View>
+
+      {/* Other Information Input */}
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Other information</Text>
         <TextInput
           style={styles.textInput}
           multiline={true}
-          placeholder="Accessories, behaviour, etc." //
+          placeholder="Other hazards, location details, etc."
           placeholderTextColor="#999"
         />
       </View>
 
+      {/* Submit Button */}
       <TouchableOpacity style={styles.submitButton}>
         <Text style={styles.submitButtonText}>Submit Report</Text>
       </TouchableOpacity>
@@ -124,7 +324,7 @@ const styles = StyleSheet.create({
   progressBarFill: {
     height: 6,
     width: '70%',
-    backgroundColor: '#007AFF', 
+    backgroundColor: '#007AFF',
     borderRadius: 3,
   },
   heading: {
@@ -145,21 +345,22 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 18,
     fontWeight: '600',
-    marginBottom: 15,
     color: '#333',
   },
-  dropdownIcon: {
-    position: 'absolute',
-    right: 0,
-    top: 0, 
+  dropdownHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 15,
   },
   typeButtonsContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     gap: 10,
+    marginTop: 5,
   },
   typeButton: {
-    backgroundColor: '#E0E0E0', 
+    backgroundColor: '#E0E0E0',
     borderRadius: 20,
     paddingVertical: 8,
     paddingHorizontal: 15,
@@ -173,6 +374,12 @@ const styles = StyleSheet.create({
   },
   typeButtonTextSelected: {
     color: 'white',
+  },
+  selectedOptionText: {
+    marginTop: 10,
+    fontSize: 16,
+    color: '#007AFF',
+    fontWeight: '600',
   },
   textInput: {
     minHeight: 120,
