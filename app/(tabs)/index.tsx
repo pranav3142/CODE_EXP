@@ -11,40 +11,42 @@ type RoutePath = any;
 export default function HomeScreen() {
   const router = useRouter();
   const data: { title: string; path: RoutePath; image: any }[] = [
-  { title: 'First Aid Basics', path: '../guidetab/firstaid', image: require('../../assets/images/firstaid.jpeg') },
-  { title: 'Fire Safety', path: '../guidetab/fire', image: require('../../assets/images/fire.jpg') },
-  { title: 'Reaching out to a troubled friend', path: '../guidetab/friend', image: require('../../assets/images/reaching.jpeg') },
-  { title: 'Handling an Animal Bite', path: '../guidetab/bite', image: require('../../assets/images/cat-bite.jpg') }
-];
+    { title: 'First Aid Basics', path: '../guidetab/firstaid', image: require('../../assets/images/firstaid.jpeg') },
+    { title: 'Fire Safety', path: '../guidetab/fire', image: require('../../assets/images/fire.jpg') },
+    { title: 'Reaching out to a troubled friend', path: '../guidetab/friend', image: require('../../assets/images/reaching.jpeg') },
+    { title: 'Handling an Animal Bite', path: '../guidetab/bite', image: require('../../assets/images/cat-bite.jpg') }
+  ];
 
   return (
-    <ScrollView style={styles.container}>
+    <View style={styles.container}>
       <View style={styles.headerIcons}>
         <Icon name="magnify" size={24} color="black" />
         <Icon name="heart-outline" size={24} color="black" />
       </View>
 
-      <View style={styles.contentContainer}>
-        <Text style={styles.sectionTitle}>Recommended</Text>
-      </View>
-      <View style={{ alignItems: 'center', marginBottom: 24 }}>
-        <Carousel
-          
-          width={screenWidth}
-          height={220}
-          data={data}
-          mode="parallax"
-          autoPlay={true}
-          autoPlayInterval={1000}
-          modeConfig={{
-            parallaxScrollingScale: 0.9,
-            parallaxScrollingOffset: 50,
-            parallaxAdjacentItemScale: 0.75,
-          }}
-          scrollAnimationDuration={1500}
-          renderItem={({ item, index, animationValue }) => {
-            
-            return (
+      <ScrollView style={styles.headerBuffer}>
+        <View style={styles.contentContainer}>
+          <Text style={styles.sectionTitle}>Recommended</Text>
+        </View>
+
+        <View style={{ alignItems: 'center', marginBottom: 24 }}>
+          <Carousel
+
+            width={screenWidth}
+            height={220}
+            data={data}
+            mode="parallax"
+            autoPlay={true}
+            autoPlayInterval={1000}
+            modeConfig={{
+              parallaxScrollingScale: 0.9,
+              parallaxScrollingOffset: 50,
+              parallaxAdjacentItemScale: 0.75,
+            }}
+            scrollAnimationDuration={1500}
+            renderItem={({ item, index, animationValue }) => {
+
+              return (
                 <ImageBackground source={item.image} style={styles.image} imageStyle={styles.imageRadius}>
                   <View style={styles.overlay}>
                     <Pressable onPress={() => router.push(item.path)} hitSlop={10}>
@@ -52,42 +54,43 @@ export default function HomeScreen() {
                     </Pressable>
                   </View>
                 </ImageBackground>
-                
-            );
-          }}
-        />
-      </View>
 
-      <View style={styles.contentContainer}>
-        <Text style={styles.sectionTitle}>What would you like to do today?</Text>
+              );
+            }}
+          />
+        </View>
 
-        <TouchableOpacity style={[styles.actionCard, { backgroundColor: '#3AC0A0' }]} onPress={() => router.push('../respondtab/cat')}>
-          <View style={styles.cardContent}>
-            <View>
-              <Text style={styles.cardTitle}>Respond</Text>
-              <Text style={styles.cardDescription}>
-                Test your ability to respond efficiently to crisis situations
-              </Text>
+        <View style={styles.contentContainer}>
+          <Text style={styles.sectionTitle}>What would you like to do today?</Text>
+
+          <TouchableOpacity style={[styles.actionCard, { backgroundColor: '#3AC0A0' }]} onPress={() => router.push('../respondtab/cat')}>
+            <View style={styles.cardContent}>
+              <View>
+                <Text style={styles.cardTitle}>Respond</Text>
+                <Text style={styles.cardDescription}>
+                  Test your ability to respond efficiently to crisis situations
+                </Text>
+              </View>
+              <Icon name="chevron-right" size={24} color="white" />
             </View>
-            <Icon name="chevron-right" size={24} color="white" />
-          </View>
-          <Icon name="run" size={130} color="white" style={styles.cardIcon} />
-        </TouchableOpacity>
+            <Icon name="run" size={130} color="white" style={styles.cardIcon} />
+          </TouchableOpacity>
 
-        <TouchableOpacity style={[styles.actionCard, { backgroundColor: '#F35C5C' }]} onPress={() => router.push('../reporttab/cat')}>
-          <View style={styles.cardContent}>
-            <View>
-              <Text style={styles.cardTitle}>Report</Text>
-              <Text style={styles.cardDescription}>
-                Practice making accurate and concise crisis reports
-              </Text>
+          <TouchableOpacity style={[styles.actionCard, { backgroundColor: '#F35C5C' }]} onPress={() => router.push('../reporttab/cat')}>
+            <View style={styles.cardContent}>
+              <View>
+                <Text style={styles.cardTitle}>Report</Text>
+                <Text style={styles.cardDescription}>
+                  Practice making accurate and concise crisis reports
+                </Text>
+              </View>
+              <Icon name="chevron-right" size={24} color="white" />
             </View>
-            <Icon name="chevron-right" size={24} color="white" />
-          </View>
-          <Icon name="shield-star" size={130} color="white" style={styles.cardIcon} />
-        </TouchableOpacity>
-      </View>
-    </ScrollView>
+            <Icon name="shield-star" size={130} color="white" style={styles.cardIcon} />
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
+    </View>
   );
 }
 
@@ -96,11 +99,9 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     paddingTop: 60,
-    
   },
-  contentContainer: {
+  headerBuffer: {
     flex: 1,
-    paddingHorizontal: 16,
   },
   headerIcons: {
     flexDirection: 'row',
@@ -108,14 +109,14 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     paddingHorizontal: 16,
   },
+  contentContainer: {
+    flex: 1,
+    paddingHorizontal: 16,
+  },
   sectionTitle: {
     fontSize: 18,
     fontWeight: '700',
     marginBottom: 6,
-  },
-  recommendContainer: {
-    flex: 1,
-    paddingBottom: 15,
   },
   recommendImage: {
     width: '100%',
@@ -125,11 +126,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     color: 'white',
-  },
-  labelContainer: {
-    position: 'absolute',
-    bottom: 25,
-    left: 16,
   },
   actionCard: {
     height: 120,
