@@ -29,7 +29,7 @@ export default function HomeScreen() {
           <Text style={styles.sectionTitle}>Recommended</Text>
         </View>
 
-        <View style={{ alignItems: 'center', marginBottom: 24 }}>
+        <View style={{ alignItems: 'center', marginBottom: 16 }}>
           <Carousel
 
             width={screenWidth}
@@ -37,7 +37,7 @@ export default function HomeScreen() {
             data={data}
             mode="parallax"
             autoPlay={true}
-            autoPlayInterval={1000}
+            autoPlayInterval={2000}
             modeConfig={{
               parallaxScrollingScale: 0.9,
               parallaxScrollingOffset: 50,
