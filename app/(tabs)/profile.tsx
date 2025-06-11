@@ -46,18 +46,6 @@ export default function ProfileScreen() {
       ),
     },
     {
-      title: 'Notices',
-      renderContent: () => (
-        <View style={styles.switchRow}>
-          <Text style={styles.accordionContent}>Receive safety alerts and updates.</Text>
-          <Switch
-            value={settings.pushAlerts}
-            onValueChange={() => toggleSetting('pushAlerts')}
-          />
-        </View>
-      ),
-    },
-    {
       title: 'Devices',
       renderContent: () => (
         <View>
@@ -71,12 +59,21 @@ export default function ProfileScreen() {
     {
       title: 'Notifications',
       renderContent: () => (
-        <View style={styles.switchRow}>
-          <Text style={styles.accordionContent}>Enable or disable app notifications.</Text>
-          <Switch
-            value={settings.notifications}
-            onValueChange={() => toggleSetting('notifications')}
-          />
+        <View>
+          <View style={styles.switchRow}>
+            <Text style={styles.accordionContent}>Enable or disable app notifications.</Text>
+            <Switch
+              value={settings.notifications}
+              onValueChange={() => toggleSetting('notifications')}
+            />
+          </View>
+          <View style={styles.switchRow}>
+            <Text style={styles.accordionContent}>Receive safety alerts and updates.</Text>
+            <Switch
+              value={settings.pushAlerts}
+              onValueChange={() => toggleSetting('pushAlerts')}
+            />
+          </View>
         </View>
       ),
     },
@@ -215,7 +212,7 @@ const styles = StyleSheet.create({
   actionButton: {
     backgroundColor: '#007AFF',
     borderRadius: 8,
-    paddingVertical: 10,
+    paddingVertical: 8,
     paddingHorizontal: 16,
     marginHorizontal: 24,
     marginBottom: 12,
@@ -231,7 +228,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingHorizontal: 24,
-    paddingVertical: 12,
+    paddingVertical: 8,
     backgroundColor: '#f9f9f9',
   },
 });
