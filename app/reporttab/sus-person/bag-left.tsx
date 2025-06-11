@@ -308,7 +308,7 @@ export default function UnattendedObjectDetailsScreen() {
               {isRaceOpen && (
                 <TextInput
                   style={styles.textInputCompact}
-                  placeholder="e.g., Asian, Caucasian, Malay, Indian, etc."
+                  placeholder="e.g., Chinese, Caucasian, Malay, Indian, etc."
                   placeholderTextColor="#999"
                   value={race}
                   onChangeText={setRace}

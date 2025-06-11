@@ -5,6 +5,7 @@ import { useRouter } from 'expo-router';
 
 export default function MapScreen() {
   const [markers, setMarkers] = useState([]);
+  const [nextReportIsFakeReport1, setNextReportIsFakeReport1] = useState(true); // New state to alternate
   const router = useRouter();
 
   const handleMapPress = (e: MapPressEvent) => {
@@ -19,10 +20,32 @@ export default function MapScreen() {
       },
     ]);
 
+    // Navigate to '/add' as before
     router.push({
       pathname: '/add',
       params: { lat: latitude.toString(), lng: longitude.toString() },
     });
+  };
+
+  const handleMarkerCalloutPress = (marker) => {
+    const commonParams = {
+      title: marker.title,
+      subtitle: marker.subtitle,
+      about: marker.about,
+      reporter: marker.reporter,
+      image: marker.image,
+    };
+
+    // Determine the next pathname based on the state
+    const nextPathname = nextReportIsFakeReport1 ? '../maptabs/fakereport1' : '../maptabs/fakereport2';
+
+    router.push({
+      pathname: nextPathname,
+      params: commonParams,
+    });
+
+    // Toggle the state for the next press
+    setNextReportIsFakeReport1(prev => !prev);
   };
 
   return (
@@ -35,38 +58,21 @@ export default function MapScreen() {
         style={styles.map}
         onPress={handleMapPress}
         initialRegion={{
-          latitude: 1.3521,
+          latitude: 1.3521, // Singapore's approximate center
           longitude: 103.8198,
           latitudeDelta: 0.05,
           longitudeDelta: 0.05,
         }}
       >
         {markers.map(marker => (
-        <Marker
-          key={marker.id}
-          coordinate={marker.coordinate}
-          title={marker.title}
-          onCalloutPress={() => {
-            const isEven = Math.random() < 0.5; 
-
-            const commonParams = {
-              title: marker.title,
-              subtitle: marker.subtitle,
-              about: marker.about,
-              reporter: marker.reporter,
-              image: marker.image,
-            };
-
-            router.push({
-              pathname: isEven ? '../maptabs/fakereport1' : '../maptabs/fakereport2',
-              params: commonParams,
-            });
-          }}
-
-          
-        />
-))}
-
+          <Marker
+            key={marker.id}
+            coordinate={marker.coordinate}
+            title={marker.title}
+            // Use the new handler for callout press
+            onCalloutPress={() => handleMarkerCalloutPress(marker)}
+          />
+        ))}
       </MapView>
     </View>
   );
@@ -79,7 +85,7 @@ const styles = StyleSheet.create({
   banner: {
     position: 'absolute',
     zIndex: 1,
-    top: 70,
+    top: 70, // Adjusted for better visibility, might need further tuning based on header
     left: 10,
     backgroundColor: 'rgba(0,0,0,0.7)',
     padding: 30,

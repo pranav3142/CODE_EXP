@@ -8,10 +8,22 @@ import {
   TextInput,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { useNavigation } from 'expo-router';
+import { useNavigation, useRouter} from 'expo-router';
+import Toast from 'react-native-toast-message';
+
 
 export default function CreateReportScreen() {
   const navigation = useNavigation();
+  const router = useRouter();
+  
+
+    const showToast = () => {
+      Toast.show({
+        type: 'success',
+        text1: 'Your report was submitted!',
+        topOffset: 10,
+      });
+    };
 
   const [selectedInjuries, setSelectedInjuries] = useState<string[]>([]);
   const [selectedSeverity, setSelectedSeverity] = useState<string | null>(null);
@@ -222,7 +234,7 @@ export default function CreateReportScreen() {
       </View>
 
       {/* Submit Button */}
-      <TouchableOpacity style={styles.submitButton}>
+      <TouchableOpacity style={styles.submitButton} onPress={() => router.push('../')}>
         <Text style={styles.submitButtonText}>Submit Report</Text>
       </TouchableOpacity>
 
