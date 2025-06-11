@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Image, TextInput, ScrollView, TouchableOpacity } from 'react-native';
 import { Stack, useRouter } from 'expo-router';
-import { Ionicons } from '@expo/vector-icons';
+import Toast from 'react-native-toast-message';
 
 export default function FireEvacuationStepScreen() {
   const [input, setInput] = useState('');
@@ -16,18 +16,21 @@ export default function FireEvacuationStepScreen() {
     }
   };
 
+  const showToast = () => {
+    Toast.show({
+      type: 'success',
+      text1: 'You managed to evacuate quickly!',
+      topOffset: 10,
+    });
+  };
+
+  useEffect(() => {
+    showToast();
+  }, []);
+
   return (
     <ScrollView style={styles.container}>
       <Stack.Screen options={{ title: 'Response Training' }} />
-
-      <View style={styles.banner}>
-        <Ionicons name="checkmark-circle" size={20} color="#2e7d32" />
-        <View style={styles.bannerTextContainer}>
-          <Text style={styles.bannerTitle}>Correct!</Text>
-          <Text style={styles.bannerText}>You’ve managed to locate the evacuation route and safely made it outside.</Text>
-        </View>
-        
-      </View>
 
       <Image
         source={require('../../../../assets/images/shoppingmallfire.jpg')}
@@ -56,6 +59,7 @@ export default function FireEvacuationStepScreen() {
       >
         <Text style={styles.buttonText}>Submit</Text>
       </TouchableOpacity>
+      <Toast />
     </ScrollView>
   );
 }

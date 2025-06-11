@@ -1,23 +1,26 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity } from 'react-native';
 import { Stack, useRouter } from 'expo-router';
-import { Ionicons } from '@expo/vector-icons';
+import Toast from 'react-native-toast-message';
 
 export default function FireCallSuccessScreen() {
   const router = useRouter();
 
+  const showToast = () => {
+    Toast.show({
+      type: 'success',
+      text1: 'You called the Fire Brigade!',
+      topOffset: 10,
+    });
+  };
+
+  useEffect(() => {
+    showToast();
+  }, []);
+
   return (
     <ScrollView style={styles.container}>
       <Stack.Screen options={{ title: 'Response Training' }} />
-
-      <View style={styles.banner}>
-        <Ionicons name="checkmark-circle" size={20} color="#2e7d32" />
-        <View style={styles.bannerTextContainer}>
-          <Text style={styles.bannerTitle}>Correct!</Text>
-          <Text style={styles.bannerText}>You called the fire fighters! Now they are able to put out the fires and rescue everyone else.</Text>
-        </View>
-        <Ionicons name="close" size={16} color="#4caf50" />
-      </View>
 
       <Image
         source={require('../../../../assets/images/shoppingmallfire.jpg')}
@@ -27,9 +30,10 @@ export default function FireCallSuccessScreen() {
       <Text style={styles.heading}>Congratulations!</Text>
       <Text style={styles.paragraph}>Continue training in a diverse array of scenarios and you’ll be well equipped to handle any crisis that may befall you.</Text>
 
-      <TouchableOpacity style={styles.button} onPress={() => router.push('/')}> 
+      <TouchableOpacity style={styles.button} onPress={() => router.push('/')}>
         <Text style={styles.buttonText}>Home</Text>
       </TouchableOpacity>
+      <Toast />
     </ScrollView>
   );
 }

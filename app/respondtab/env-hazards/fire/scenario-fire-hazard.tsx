@@ -27,36 +27,38 @@ export default function FireHazardScenario() {
   };
 
   return (
-    <ScrollView style={styles.container}>
-      <Stack.Screen options={{ title: 'Response Training' }} />
+    <>
+      <ScrollView style={styles.container}>
+        <Stack.Screen options={{ title: 'Response Training' }} />
 
-      <Image
-        source={require('../../../../assets/images/shoppingmallfire.jpg')}
-        style={styles.image}
-      />
+        <Image
+          source={require('../../../../assets/images/shoppingmallfire.jpg')}
+          style={styles.image}
+        />
 
-      <Text style={styles.questionTitle}>Shopping Mall Fire!</Text>
-      <Text style={styles.questionText}>
-        You spotted a fire breaking out from a stall at an exhibition in a mall. What do you do first?
-      </Text>
+        <Text style={styles.questionTitle}>Shopping Mall Fire!</Text>
+        <Text style={styles.questionText}>
+          You spotted a fire breaking out from a stall at an exhibition in a mall. What do you do first?
+        </Text>
 
-      {options.map((option, index) => {
-        const isSelected = selected === index;
-        const isWrong = submitted && isSelected && index !== correctIndex;
+        {options.map((option, index) => {
+          const isSelected = selected === index;
+          const isWrong = submitted && isSelected && index !== correctIndex;
 
-        return (
-          <TouchableOpacity
-            key={index}
-            style={[styles.option, isSelected && styles.optionSelected, isWrong && styles.optionWrong]}
-            onPress={() => handlePress(index)}>
-            <Text style={styles.optionText}>{option}</Text>
-            <View
-              style={[styles.radio, isSelected && styles.radioSelected, isWrong && styles.radioWrong]}
-            />
-          </TouchableOpacity>
-        );
-      })}
-    </ScrollView>
+          return (
+            <TouchableOpacity
+              key={index}
+              style={[styles.option, isSelected && styles.optionSelected, isWrong && styles.optionWrong]}
+              onPress={() => handlePress(index)}>
+              <Text style={styles.optionText}>{option}</Text>
+              <View
+                style={[styles.radio, isSelected && styles.radioSelected, isWrong && styles.radioWrong]}
+              />
+            </TouchableOpacity>
+          );
+        })}
+      </ScrollView>
+    </>
   );
 }
 

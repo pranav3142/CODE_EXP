@@ -1,18 +1,26 @@
 import React, { useEffect } from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, Button } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView } from 'react-native';
 import { Stack, useRouter } from 'expo-router';
-import { Ionicons } from '@expo/vector-icons';
 import Toast from 'react-native-toast-message';
 
 export default function FireSuccessScreen() {
   const router = useRouter();
 
-  
+  const showToast = () => {
+    Toast.show({
+      type: 'success',
+      text1: 'Always ensure your own safety first!',
+      topOffset: 10,
+    });
+  };
+
+  useEffect(() => {
+    showToast();
+  }, []);
 
   return (
     <ScrollView style={styles.container}>
       <Stack.Screen options={{ title: 'Response Training' }} />
-
 
       <Image
         source={require('../../../../assets/images/shoppingmallfire.jpg')}
@@ -30,9 +38,11 @@ export default function FireSuccessScreen() {
         onPress={() => router.push('/respondtab/env-hazards/fire/fire-evacuation-step')}>
         <Text style={styles.buttonText}>Next</Text>
       </TouchableOpacity>
+      <Toast />
     </ScrollView>
   );
 }
+
 
 const styles = StyleSheet.create({
   container: {
