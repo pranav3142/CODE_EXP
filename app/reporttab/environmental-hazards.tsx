@@ -1,9 +1,9 @@
 import React, { useLayoutEffect, useState } from 'react';
 import {
-  View, Text, StyleSheet, TouchableOpacity, ScrollView, TextInput,
+  View, Text, StyleSheet, TouchableOpacity, ScrollView, TextInput, Image,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { useNavigation } from 'expo-router';
+import { useNavigation, useRouter } from 'expo-router'; // Added useRouter
 
 const DROPDOWNS = {
   type: { title: 'Type', data: ['FIRE', 'FLOOD', 'HAZARDEOUS MATERIAL', 'HEAT WARNING', 'OTHERS'], multi: false },
@@ -14,6 +14,7 @@ const DROPDOWNS = {
 
 export default function CreateReportScreen() {
   const navigation = useNavigation();
+  const router = useRouter(); // Initialize useRouter
 
   const [dropdownsOpen, setDropdownsOpen] = useState(
     Object.fromEntries(Object.keys(DROPDOWNS).map(k => [k, true]))
@@ -47,6 +48,12 @@ export default function CreateReportScreen() {
     if (!isMulti) {
       setDropdownsOpen(prev => ({ ...prev, [key]: false }));
     }
+  };
+
+  const handleSubmitReport = () => {
+    // You can add logic here to process the selected data before navigating
+    console.log("Submitting report:", selected);
+    router.push('/reporttab/env-hazards/fire-call-success');
   };
 
   const renderDropdown = (key: string) => {
@@ -94,6 +101,10 @@ export default function CreateReportScreen() {
       <View style={styles.progressBarBackground}>
         <View style={styles.progressBarFill} />
       </View>
+            <Image
+              source={require('../../assets/images/shoppingmallfire.jpg')}
+              style={styles.image}
+            />
       <Text style={styles.heading}>Fill in the details</Text>
       <Text style={styles.subheading}>Fill us in on the key details, and we’ll be right with you.</Text>
 
@@ -109,7 +120,7 @@ export default function CreateReportScreen() {
         />
       </View>
 
-      <TouchableOpacity style={styles.submitButton}>
+      <TouchableOpacity style={styles.submitButton} onPress={handleSubmitReport}>
         <Text style={styles.submitButtonText}>Submit Report</Text>
       </TouchableOpacity>
       <View style={{ height: 50 }} />
@@ -127,6 +138,12 @@ const styles = StyleSheet.create({
   sectionTitle: { fontSize: 18, fontWeight: '600', color: '#333' },
   dropdownHeader: {
     flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 15,
+  },
+    image: {
+    width: '100%',
+    height: 180,
+    borderRadius: 10,
+    marginBottom: 16,
   },
   typeButtonsContainer: { flexDirection: 'row', flexWrap: 'wrap', gap: 10, marginTop: 5 },
   typeButton: { backgroundColor: '#E0E0E0', borderRadius: 20, paddingVertical: 8, paddingHorizontal: 15 },
