@@ -109,6 +109,7 @@ const styles = StyleSheet.create({
   cardText: {
     fontSize: 13,
     color: '#555',
+    maxWidth: '90%',
   },
   cardIcon: {
     position: 'absolute',
