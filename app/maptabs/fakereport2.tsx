@@ -48,13 +48,39 @@ return (
         {showMoreDetails && (
           <>
             <View style={styles.section}>
-              <Text style={styles.sectionLabel}>Severity</Text>
-              <Text style={styles.reporter}>{'Moderate'}</Text>
+              <Text style={styles.sectionLabel}>Suspect</Text>
+              <Text style={styles.reporter}>{'Yes'}</Text>
             </View>
 
             <View style={styles.section}>
-              <Text style={styles.sectionLabel}>Services</Text>
-              <Text style={styles.reporter}>{'Ambulance'}</Text>
+              <Text style={styles.sectionLabel}>Gender</Text>
+              <Text style={styles.reporter}>{'Male'}</Text>
+            </View>
+
+            <View style={styles.section}>
+              <Text style={styles.sectionLabel}>Attire</Text>
+              <Text style={styles.reporter}>{'Red jacket, blue jeans'}</Text>
+            </View>
+
+
+            <View style={styles.section}>
+              <Text style={styles.sectionLabel}>Height</Text>
+              <Text style={styles.reporter}>{'175cm'}</Text>
+            </View>
+
+            <View style={styles.section}>
+              <Text style={styles.sectionLabel}>Weight</Text>
+              <Text style={styles.reporter}>{'70kg'}</Text>
+            </View>
+            
+            <View style={styles.section}>
+              <Text style={styles.sectionLabel}>Age</Text>
+              <Text style={styles.reporter}>{'20s'}</Text>
+            </View>
+            
+            <View style={styles.section}>
+              <Text style={styles.sectionLabel}>Race</Text>
+              <Text style={styles.reporter}>{'Chinese'}</Text>
             </View>
 
             <View style={styles.section}>

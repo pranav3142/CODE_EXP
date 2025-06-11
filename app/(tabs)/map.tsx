@@ -65,7 +65,6 @@ export default function MapScreen() {
         }}
       >
         {markers.map(marker => (
-<<<<<<< HEAD
           <Marker
             key={marker.id}
             coordinate={marker.coordinate}
@@ -74,31 +73,6 @@ export default function MapScreen() {
             onCalloutPress={() => handleMarkerCalloutPress(marker)}
           />
         ))}
-=======
-        <Marker
-          key={marker.id}
-          coordinate={marker.coordinate}
-          title={marker.title}
-          onCalloutPress={() => {
-            const isEven = Math.random() < 0.5; 
-
-            const commonParams = {
-              title: marker.title,
-              subtitle: marker.subtitle,
-              about: marker.about,
-              reporter: marker.reporter,
-              image: marker.image,
-            };
-
-            router.push({
-              pathname: isEven ? '../maptabs/fakereport1' : '../maptabs/fakereport2',
-              params: commonParams,
-            });
-          }}
-        />
-))}
-
->>>>>>> 7120497bfe6979900a0a2c304e233e406fad2485
       </MapView>
     </View>
   );
