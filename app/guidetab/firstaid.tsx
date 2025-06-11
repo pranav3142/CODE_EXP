@@ -28,22 +28,32 @@ export default function FirstAidArticle() {
         <Text style={styles.meta}>Skills • Updated June 2025</Text>
 
         <Text style={styles.paragraph}>
-          Knowing first aid can save lives. In this guide, we’ll walk through essential first aid responses including CPR, wound care, and shock treatment. Understanding the basics is your first step to being prepared.
+          Knowing first aid can save lives. In this guide, we’ll walk through essential first aid responses. Understanding the basics is your first step to being prepared.
         </Text>
 
-        <Text style={styles.subheading}>1. Assess the Situation</Text>
+        <Text style={styles.subheading}>1. Check for Danger</Text>
         <Text style={styles.paragraph}>
-          Ensure the scene is safe for you and the victim. Do not rush into dangerous environments.
+            Ensure that the surrounding is safe for you to approach the casualty.
         </Text>
 
-        <Text style={styles.subheading}>2. Call for Help</Text>
+        <Text style={styles.subheading}>2. Check for Response</Text>
         <Text style={styles.paragraph}>
-          Dial emergency services immediately. Provide location and nature of the injury clearly.
+            Tap firmly on the casualty’s shoulders, and ask, “Hello hello, are you ok?”
         </Text>
 
-        <Text style={styles.subheading}>3. Start Basic First Aid</Text>
+        <Text style={styles.subheading}>3. Shout for an Ambulance and AED</Text>
         <Text style={styles.paragraph}>
-          Apply pressure to wounds, check breathing, and start CPR if necessary. Use gloves if available.
+            Ask someone to call 995 for an ambulance, and ask someone else to get the nearest AED.
+        </Text>
+
+        <Text style={styles.subheading}>4. Check for Breathing</Text>
+        <Text style={styles.paragraph}>
+            Look for the rise and fall of the casualty’s chest.
+        </Text>
+
+        <Text style={styles.subheading}>5. Early CPR</Text>
+        <Text style={styles.paragraph}>
+            If the casualty is not breathing, breathing abnormally, or when you are in doubt, start CPR immediately. For every minute that nothing is done to resuscitate the victim, the chance of survival drops by 10%.
         </Text>
 
         <Text style={styles.subheading}>Pro Tip 💡</Text>
