@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useLayoutEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView } from 'react-native';
 import { Stack, useRouter } from 'expo-router';
+import { useNavigation } from '@react-navigation/native';
+
 
 const options = [
   'Call the building manager',
@@ -15,6 +17,18 @@ export default function FireHazardScenario() {
   const [selected, setSelected] = useState(null);
   const [submitted, setSubmitted] = useState(false);
   const router = useRouter();
+
+  const navigation = useNavigation();
+       
+         useLayoutEffect(() => {
+           navigation.setOptions({
+             title: 'Response Training',
+             headerStyle: {
+               backgroundColor: '#fff',
+             },
+             headerTintColor: '#25292e',
+           });
+         }, [navigation]);
 
   const handlePress = (index: number) => {
     setSelected(index);

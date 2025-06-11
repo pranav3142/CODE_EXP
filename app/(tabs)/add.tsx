@@ -41,10 +41,7 @@ export default function RespondCategoryScreen() {
   }, [navigation]);
   return (
     <ScrollView style={styles.container}>
-      <View style={styles.progressBarBackground}>
-        <View style={styles.progressBarFill} />
-      </View>
-
+      
       <Text style={styles.subtitle}>Pick a category</Text>
       <Text style={styles.description}>Select the category of scenario you’d like to train or specialise in.</Text>
 
@@ -70,7 +67,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     paddingHorizontal: 16,
-    paddingTop: 20,
+    paddingTop: 100,
   },
   progressBarBackground: {
     height: 6,

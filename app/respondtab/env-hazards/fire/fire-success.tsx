@@ -1,10 +1,25 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useLayoutEffect } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView } from 'react-native';
 import { Stack, useRouter } from 'expo-router';
 import Toast from 'react-native-toast-message';
+import { useNavigation } from '@react-navigation/native';
+
+
 
 export default function FireSuccessScreen() {
   const router = useRouter();
+
+  const navigation = useNavigation();
+         
+           useLayoutEffect(() => {
+             navigation.setOptions({
+               title: 'Response Training',
+               headerStyle: {
+                 backgroundColor: '#fff',
+               },
+               headerTintColor: '#25292e',
+             });
+           }, [navigation]);
 
   const showToast = () => {
     Toast.show({
@@ -35,7 +50,7 @@ export default function FireSuccessScreen() {
 
       <TouchableOpacity
         style={styles.button}
-        onPress={() => router.push('/respondtab/env-hazards/fire/fire-evacuation-step')}>
+        onPress={() => router.push('/respondtab/env-hazards/fire/streetview')}>
         <Text style={styles.buttonText}>Next</Text>
       </TouchableOpacity>
       <Toast />
