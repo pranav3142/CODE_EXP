@@ -30,7 +30,7 @@ export default function ReportDetailsScreen() {
         <View style={styles.section}>
           <Text style={styles.sectionLabel}>ABOUT</Text>
           <Text style={styles.body}>
-            {about || 'Black bag left unattended in the MRT'}
+            {about || 'Red bag left unattended in the MRT.'}
           </Text>
         </View>
 
