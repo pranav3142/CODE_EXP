@@ -32,7 +32,7 @@ export default function RespondCategoryScreen() {
 
   useLayoutEffect(() => {
     navigation.setOptions({
-      title: 'Create a Report',
+      title: 'Report Training',
       headerStyle: {
         backgroundColor: '#fff',
       },
