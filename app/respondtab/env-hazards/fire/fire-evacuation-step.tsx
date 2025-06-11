@@ -1,12 +1,26 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useLayoutEffect } from 'react';
 import { View, Text, StyleSheet, Image, TextInput, ScrollView, TouchableOpacity } from 'react-native';
 import { Stack, useRouter } from 'expo-router';
 import Toast from 'react-native-toast-message';
+import { useNavigation } from '@react-navigation/native';
+
 
 export default function FireEvacuationStepScreen() {
   const [input, setInput] = useState('');
   const [error, setError] = useState(false);
   const router = useRouter();
+
+  const navigation = useNavigation();
+       
+         useLayoutEffect(() => {
+           navigation.setOptions({
+             title: 'Response Training',
+             headerStyle: {
+               backgroundColor: '#fff',
+             },
+             headerTintColor: '#25292e',
+           });
+         }, [navigation]);
 
   const handleSubmit = () => {
     if (input.trim() === '995') {
