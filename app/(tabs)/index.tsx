@@ -6,17 +6,15 @@ import Carousel from 'react-native-reanimated-carousel';
 
 const { width: screenWidth } = Dimensions.get('window');
 
-type RoutePath = '/medical-emergencies' | '/suspicious-persons-activities' | '/suspicious-persons-activities';
-
-
+type RoutePath = any;
 
 export default function HomeScreen() {
   const router = useRouter();
   const data: { title: string; path: RoutePath; image: any }[] = [
-  { title: 'First Aid Basics', path: '/medical-emergencies', image: require('../../assets/images/firstaid.jpeg') },
-  { title: 'Fire Safety', path: '/suspicious-persons-activities', image: require('../../assets/images/fire.jpg') },
-  { title: 'Reaching out to a troubled friend', path: '/suspicious-persons-activities', image: require('../../assets/images/reaching.jpeg') },
-  { title: 'Reaching out to a troubled friend', path: '/suspicious-persons-activities', image: require('../../assets/images/reaching.jpeg') }
+  { title: 'First Aid Basics', path: '../guidetab/firstaid', image: require('../../assets/images/firstaid.jpeg') },
+  { title: 'Fire Safety', path: '../guidetab/fire', image: require('../../assets/images/fire.jpg') },
+  { title: 'Reaching out to a troubled friend', path: '../guidetab/friend', image: require('../../assets/images/reaching.jpeg') },
+  { title: 'Handling an Animal Bite', path: '../guidetab/bite', image: require('../../assets/images/cat-bite.jpg') }
 ];
 
   return (
@@ -32,19 +30,20 @@ export default function HomeScreen() {
       <View style={{ alignItems: 'center', marginBottom: 24 }}>
         <Carousel
           
-          width={screenWidth * 0.85}
+          width={screenWidth}
           height={220}
           data={data}
           mode="parallax"
+          autoPlay={true}
+          autoPlayInterval={1000}
           modeConfig={{
             parallaxScrollingScale: 0.9,
             parallaxScrollingOffset: 50,
             parallaxAdjacentItemScale: 0.75,
           }}
-          scrollAnimationDuration={1000}
+          scrollAnimationDuration={1500}
           renderItem={({ item, index, animationValue }) => {
             
-
             return (
                 <ImageBackground source={item.image} style={styles.image} imageStyle={styles.imageRadius}>
                   <View style={styles.overlay}>

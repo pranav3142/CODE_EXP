@@ -1,27 +1,33 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const guides = [
   {
     title: 'First Aid Basics',
     category: 'Skills',
-    image: 'https://i.ibb.co/XkjCZ9nL/mathurin-napoly-matnapo-5-K5gy-Pv-KC80-unsplash.jpg',
+    image: require('../../assets/images/firstaid.jpeg'),
     isNew: true,
-    route: 'guide-first-aid',
-  },
+    route: '../guidetab/firstaid',
+  },  
   {
     title: 'Spotted a Fire?',
     category: 'Emergency Response',
-    image: 'https://static1.straitstimes.com.sg/s3fs-public/articles/2022/05/27/ads-fire-27052022.jpg?VersionId=9GnrWKeAV1J_jvZcqeYBRgZ1aq0Awz0R',
-    route: 'guide-fire',
+    image: require('../../assets/images/fire.jpg'),
+    route: '../guidetab/fire',
   },
   {
     title: 'Reaching out to a Troubled Friend',
     category: 'Emergency Prevention',
-    image: 'https://images.unsplash.com/photo-1664899303670-9b7662545a34?q=80&w=3918&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    route: 'guide-friend',
+    image: require('../../assets/images/reaching.jpeg'),
+    route: '../guidetab/friend',
+  },
+  {
+    title: 'Handling an Animal Bite',
+    category: 'Skills',
+    image: require('../../assets/images/cat-bite.jpg'),
+    route: '../guidetab/bite',
   },
 ];
 
@@ -29,15 +35,16 @@ export default function GuidesScreen() {
   const router = useRouter();
 
   return (
-    <ScrollView style={styles.container}>
+    <View style={styles.container}>
       <View style={styles.headerIcons}>
-        <Ionicons name="search" size={24} color="black" />
-        <Ionicons name="heart-outline" size={24} color="black" />
+        <Icon name="magnify" size={24} color="black" />
+        <Icon name="heart-outline" size={24} color="black" />
       </View>
 
+      <ScrollView style={styles.contentContainer}>
       {guides.map((guide, index) => (
         <TouchableOpacity key={index} style={styles.card} onPress={() => router.push(guide.route)}>
-          <Image source={{ uri: guide.image }} style={styles.image} />
+          <Image source={guide.image} style={styles.image} />
           {guide.isNew && <View style={styles.badge}><Text style={styles.badgeText}>NEW</Text></View>}
           <View style={styles.textContainer}>
             <Text style={styles.title}>{guide.title}</Text>
@@ -46,6 +53,7 @@ export default function GuidesScreen() {
         </TouchableOpacity>
       ))}
     </ScrollView>
+    </View>
   );
 }
 
@@ -53,13 +61,17 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    paddingTop: 50,
+    paddingTop: 60,
+  },
+  contentContainer: {
+    flex: 1,
     paddingHorizontal: 16,
   },
   headerIcons: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginBottom: 16,
+    paddingHorizontal: 16,
   },
   card: {
     borderRadius: 16,
