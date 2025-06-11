@@ -1,10 +1,23 @@
-import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView, Dimensions, ImageBackground, Pressable } from 'react-native';
 import { useRouter } from 'expo-router';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Carousel from 'react-native-reanimated-carousel';
+
+const { width: screenWidth } = Dimensions.get('window');
+
+type RoutePath = '/medical-emergencies' | '/suspicious-persons-activities' | '/suspicious-persons-activities';
+
+
 
 export default function HomeScreen() {
   const router = useRouter();
+  const data: { title: string; path: RoutePath; image: any }[] = [
+  { title: 'First Aid Basics', path: '/medical-emergencies', image: require('../../assets/images/firstaid.jpeg') },
+  { title: 'Fire Safety', path: '/suspicious-persons-activities', image: require('../../assets/images/fire.jpg') },
+  { title: 'Reaching out to a troubled friend', path: '/suspicious-persons-activities', image: require('../../assets/images/reaching.jpeg') },
+  { title: 'Reaching out to a troubled friend', path: '/suspicious-persons-activities', image: require('../../assets/images/reaching.jpeg') }
+];
 
   return (
     <ScrollView style={styles.container}>
@@ -16,15 +29,34 @@ export default function HomeScreen() {
       <View style={styles.contentContainer}>
         <Text style={styles.sectionTitle}>Recommended</Text>
       </View>
+      <View style={{ alignItems: 'center', marginBottom: 24 }}>
+        <Carousel
+          
+          width={screenWidth * 0.85}
+          height={220}
+          data={data}
+          mode="parallax"
+          modeConfig={{
+            parallaxScrollingScale: 0.9,
+            parallaxScrollingOffset: 50,
+            parallaxAdjacentItemScale: 0.75,
+          }}
+          scrollAnimationDuration={1000}
+          renderItem={({ item, index, animationValue }) => {
+            
 
-      <View style={styles.recommendContainer}>
-        <Image
-          source={{ uri: 'https://i.ibb.co/XkjCZ9nL/mathurin-napoly-matnapo-5-K5gy-Pv-KC80-unsplash.jpg' }}
-          style={styles.recommendImage}
+            return (
+                <ImageBackground source={item.image} style={styles.image} imageStyle={styles.imageRadius}>
+                  <View style={styles.overlay}>
+                    <Pressable onPress={() => router.push(item.path)} hitSlop={10}>
+                      <Text style={styles.title}>{item.title}</Text>
+                    </Pressable>
+                  </View>
+                </ImageBackground>
+                
+            );
+          }}
         />
-        <View style={styles.labelContainer}>
-          <Text style={styles.imageLabel}>First Aid Basics</Text>
-        </View>
       </View>
 
       <View style={styles.contentContainer}>
@@ -65,6 +97,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     paddingTop: 60,
+    
   },
   contentContainer: {
     flex: 1,
@@ -127,5 +160,24 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: -15,
     right: 40,
+  },
+  image: {
+    width: '100%',
+    height: 220,
+    justifyContent: 'flex-end',
+  },
+  imageRadius: {
+    borderRadius: 16,
+  },
+  overlay: {
+    backgroundColor: 'rgba(0, 0, 0, 0.4)',
+    padding: 16,
+    borderBottomLeftRadius: 16,
+    borderBottomRightRadius: 16,
+  },
+  title: {
+    color: '#fff',
+    fontSize: 24,
+    fontWeight: 'bold',
   },
 });
