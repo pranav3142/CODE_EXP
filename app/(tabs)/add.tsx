@@ -46,7 +46,7 @@ export default function RespondCategoryScreen() {
       <Text style={styles.description}>Select the category of scenario you’d like to train or specialise in.</Text>
 
       {categories.map((item, index) => (
-        <TouchableOpacity key={index} style={styles.card} onPress={() => router.push(`/reporttab/${item.title.toLowerCase().replace(/[^a-z0-9]/g, '-')}`)}>
+        <TouchableOpacity key={index} style={styles.card} onPress={() => router.push(`../actualreport/real${item.title.toLowerCase().replace(/[^a-z0-9]/g, '-')}`)}>
 
           <Text style={styles.cardTitle}>{item.title}</Text>
           <Text style={styles.cardText}>{item.description}</Text>

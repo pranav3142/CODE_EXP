@@ -1,0 +1,332 @@
+import React, { useLayoutEffect, useState } from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  ScrollView,
+  TextInput,
+} from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
+import { useNavigation } from 'expo-router';
+
+export default function CreateReportScreen() {
+  const navigation = useNavigation();
+
+  const [selectedInjuries, setSelectedInjuries] = useState<string[]>([]);
+  const [selectedSeverity, setSelectedSeverity] = useState<string | null>(null);
+  const [selectedServices, setSelectedServices] = useState<string[]>([]);
+
+  const [isInjuryDropdownOpen, setIsInjuryDropdownOpen] = useState(true);
+  const [isSeverityDropdownOpen, setIsSeverityDropdownOpen] = useState(true);
+  const [isServicesDropdownOpen, setIsServicesDropdownOpen] = useState(true);
+
+  const injuryOptions = ['BURN', 'BLEEDING', 'FAINTING', 'STROKE', 'HEART ATTACK', 'SEIZURE', 'KNOCK ON HEAD', 'NIL'];
+  const severities = ['MILD', 'MODERATE', 'SEVERE', 'CRITICAL'];
+  const services = ['AMBULANCE', 'FIRE ENGINE', 'POLICE'];
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      title: 'Report',
+      headerStyle: {
+        backgroundColor: '#fff',
+      },
+      headerTintColor: '#25292e',
+    });
+  }, [navigation]);
+
+  const toggleDropdown = (dropdown: string) => {
+    switch (dropdown) {
+      case 'injury':
+        setIsInjuryDropdownOpen(!isInjuryDropdownOpen);
+        break;
+      case 'severity':
+        setIsSeverityDropdownOpen(!isSeverityDropdownOpen);
+        break;
+      case 'services':
+        setIsServicesDropdownOpen(!isServicesDropdownOpen);
+        break;
+      default:
+        break;
+    }
+  };
+
+  const handleSingleSelect = (
+    value: string,
+    setter: React.Dispatch<React.SetStateAction<string | null>>,
+    dropdownCloser: React.Dispatch<React.SetStateAction<boolean>>
+  ) => {
+    setter(value);
+    dropdownCloser(false);
+  };
+
+  const handleMultiSelect = (
+    value: string,
+    currentSelections: string[],
+    setter: React.Dispatch<React.SetStateAction<string[]>>
+  ) => {
+    if (currentSelections.includes(value)) {
+      setter(currentSelections.filter((item) => item !== value));
+    } else {
+      setter([...currentSelections, value]);
+    }
+  };
+
+  return (
+    <ScrollView style={styles.container}>
+      
+
+      <Text style={styles.heading}>Fill in the details</Text>
+      <Text style={styles.subheading}>
+        Fill us in on the key details, and we’ll be right with you.
+      </Text>
+
+      {/* Injury Dropdown (Multi-select) */}
+      <View style={styles.section}>
+        <TouchableOpacity
+          style={styles.dropdownHeader}
+          onPress={() => toggleDropdown('injury')}
+        >
+          <Text style={styles.sectionTitle}>Injury</Text>
+          <Ionicons
+            name={isInjuryDropdownOpen ? 'chevron-up' : 'chevron-down'}
+            size={20}
+            color="#999"
+          />
+        </TouchableOpacity>
+        {isInjuryDropdownOpen && (
+          <View style={styles.typeButtonsContainer}>
+            {injuryOptions.map((inj, index) => (
+              <TouchableOpacity
+                key={index}
+                style={[
+                  styles.typeButton,
+                  selectedInjuries.includes(inj) && styles.typeButtonSelected,
+                ]}
+                onPress={() =>
+                  handleMultiSelect(inj, selectedInjuries, setSelectedInjuries)
+                }
+              >
+                <Text
+                  style={[
+                    styles.typeButtonText,
+                    selectedInjuries.includes(inj) && styles.typeButtonTextSelected,
+                  ]}
+                >
+                  {inj}
+                </Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+        )}
+        {selectedInjuries.length > 0 && !isInjuryDropdownOpen && (
+          <Text style={styles.selectedOptionText}>{selectedInjuries.join(', ')}</Text>
+        )}
+      </View>
+
+      {/* Severity Dropdown (Single-select) */}
+      <View style={styles.section}>
+        <TouchableOpacity
+          style={styles.dropdownHeader}
+          onPress={() => toggleDropdown('severity')}
+        >
+          <Text style={styles.sectionTitle}>Severity</Text>
+          <Ionicons
+            name={isSeverityDropdownOpen ? 'chevron-up' : 'chevron-down'}
+            size={20}
+            color="#999"
+          />
+        </TouchableOpacity>
+        {isSeverityDropdownOpen && (
+          <View style={styles.typeButtonsContainer}>
+            {severities.map((severity, index) => (
+              <TouchableOpacity
+                key={index}
+                style={[
+                  styles.typeButton,
+                  selectedSeverity === severity && styles.typeButtonSelected,
+                ]}
+                onPress={() =>
+                  handleSingleSelect(severity, setSelectedSeverity, setIsSeverityDropdownOpen)
+                }
+              >
+                <Text
+                  style={[
+                    styles.typeButtonText,
+                    selectedSeverity === severity && styles.typeButtonTextSelected,
+                  ]}
+                >
+                  {severity}
+                </Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+        )}
+        {selectedSeverity && !isSeverityDropdownOpen && (
+          <Text style={styles.selectedOptionText}>{selectedSeverity}</Text>
+        )}
+      </View>
+
+      {/* Services Required Dropdown (Multi-select) */}
+      <View style={styles.section}>
+        <TouchableOpacity
+          style={styles.dropdownHeader}
+          onPress={() => toggleDropdown('services')}
+        >
+          <Text style={styles.sectionTitle}>Services Required</Text>
+          <Ionicons
+            name={isServicesDropdownOpen ? 'chevron-up' : 'chevron-down'}
+            size={20}
+            color="#999"
+          />
+        </TouchableOpacity>
+        {isServicesDropdownOpen && (
+          <View style={styles.typeButtonsContainer}>
+            {services.map((service, index) => (
+              <TouchableOpacity
+                key={index}
+                style={[
+                  styles.typeButton,
+                  selectedServices.includes(service) && styles.typeButtonSelected,
+                ]}
+                onPress={() =>
+                  handleMultiSelect(service, selectedServices, setSelectedServices)
+                }
+              >
+                <Text
+                  style={[
+                    styles.typeButtonText,
+                    selectedServices.includes(service) && styles.typeButtonTextSelected,
+                  ]}
+                >
+                  {service}
+                </Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+        )}
+        {selectedServices.length > 0 && !isServicesDropdownOpen && (
+          <Text style={styles.selectedOptionText}>{selectedServices.join(', ')}</Text>
+        )}
+      </View>
+
+      {/* Other Information Input */}
+      <View style={styles.section}>
+        <Text style={styles.sectionTitle}>Other information</Text>
+        <TextInput
+          style={styles.textInput}
+          multiline={true}
+          placeholder="Other hazards, location details, etc."
+          placeholderTextColor="#999"
+        />
+      </View>
+
+      {/* Submit Button */}
+      <TouchableOpacity style={styles.submitButton}>
+        <Text style={styles.submitButtonText}>Submit Report</Text>
+      </TouchableOpacity>
+
+      <View style={{ height: 50 }} />
+    </ScrollView>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    paddingHorizontal: 20,
+    paddingTop: 10,
+  },
+  progressBarBackground: {
+    height: 6,
+    backgroundColor: '#e5e5e5',
+    borderRadius: 3,
+    marginBottom: 20,
+    width: '100%',
+  },
+  progressBarFill: {
+    height: 6,
+    width: '70%',
+    backgroundColor: '#007AFF',
+    borderRadius: 3,
+  },
+  heading: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 8,
+    color: '#333',
+  },
+  subheading: {
+    fontSize: 16,
+    color: '#666',
+    marginBottom: 30,
+  },
+  section: {
+    marginBottom: 25,
+    position: 'relative',
+  },
+  sectionTitle: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: '#333',
+  },
+  dropdownHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 15,
+  },
+  typeButtonsContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 10,
+    marginTop: 5,
+  },
+  typeButton: {
+    backgroundColor: '#E0E0E0',
+    borderRadius: 20,
+    paddingVertical: 8,
+    paddingHorizontal: 15,
+  },
+  typeButtonSelected: {
+    backgroundColor: '#007AFF',
+  },
+  typeButtonText: {
+    color: '#333',
+    fontWeight: '500',
+  },
+  typeButtonTextSelected: {
+    color: 'white',
+  },
+  selectedOptionText: {
+    marginTop: 10,
+    fontSize: 16,
+    color: '#007AFF',
+    fontWeight: '600',
+  },
+  textInput: {
+    minHeight: 120,
+    backgroundColor: '#f9f9f9',
+    borderRadius: 10,
+    padding: 15,
+    fontSize: 16,
+    lineHeight: 22,
+    borderColor: '#e5e5e5',
+    borderWidth: 1,
+    textAlignVertical: 'top',
+    color: '#333',
+  },
+  submitButton: {
+    backgroundColor: '#007AFF',
+    borderRadius: 12,
+    paddingVertical: 18,
+    alignItems: 'center',
+    marginTop: 30,
+  },
+  submitButtonText: {
+    color: 'white',
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+});
