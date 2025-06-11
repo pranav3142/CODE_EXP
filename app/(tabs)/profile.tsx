@@ -7,28 +7,115 @@ import {
   TouchableOpacity,
   ScrollView,
   LayoutAnimation,
+  Switch,
 } from 'react-native';
 import Collapsible from 'react-native-collapsible';
 import { Ionicons } from '@expo/vector-icons';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-const items = [
-  { title: 'Important Contacts', content: 'Add or edit contacts that can be reached in emergencies.' },
-  { title: 'Notices', content: 'Receive important alerts and safety updates in your area.' },
-  { title: 'Devices', content: 'Manage connected devices or sensors.' },
-  { title: 'Notifications', content: 'Customize how and when you receive alerts.' },
-  { title: 'Appearance', content: 'Switch between light and dark mode.' },
-  { title: 'Language', content: 'Set your preferred language.' },
-  { title: 'Privacy & Security', content: 'Control your data sharing and security preferences.' },
-];
-
 export default function ProfileScreen() {
   const [activeSections, setActiveSections] = useState({});
+
+  const [settings, setSettings] = useState({
+    pushAlerts: true,
+    darkMode: false,
+    notifications: true,
+    language: 'English',
+    dataSharing: true,
+  });
 
   const toggleSection = (index) => {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
     setActiveSections((prev) => ({ ...prev, [index]: !prev[index] }));
   };
+
+  const toggleSetting = (key) => {
+    setSettings((prev) => ({ ...prev, [key]: !prev[key] }));
+  };
+
+  const items = [
+    {
+      title: 'Important Contacts',
+      renderContent: () => (
+        <View>
+          <Text style={styles.accordionContent}>Add or edit emergency contacts.</Text>
+          <TouchableOpacity style={styles.actionButton}>
+            <Text style={styles.actionButtonText}>Add New Contact</Text>
+          </TouchableOpacity>
+        </View>
+      ),
+    },
+    {
+      title: 'Notices',
+      renderContent: () => (
+        <View style={styles.switchRow}>
+          <Text style={styles.accordionContent}>Receive safety alerts and updates.</Text>
+          <Switch
+            value={settings.pushAlerts}
+            onValueChange={() => toggleSetting('pushAlerts')}
+          />
+        </View>
+      ),
+    },
+    {
+      title: 'Devices',
+      renderContent: () => (
+        <View>
+          <Text style={styles.accordionContent}>Connect and manage external devices.</Text>
+          <TouchableOpacity style={styles.actionButton}>
+            <Text style={styles.actionButtonText}>Link New Device</Text>
+          </TouchableOpacity>
+        </View>
+      ),
+    },
+    {
+      title: 'Notifications',
+      renderContent: () => (
+        <View style={styles.switchRow}>
+          <Text style={styles.accordionContent}>Enable or disable app notifications.</Text>
+          <Switch
+            value={settings.notifications}
+            onValueChange={() => toggleSetting('notifications')}
+          />
+        </View>
+      ),
+    },
+    {
+      title: 'Appearance',
+      renderContent: () => (
+        <View style={styles.switchRow}>
+          <Text style={styles.accordionContent}>Toggle light or dark mode.</Text>
+          <Switch
+            value={settings.darkMode}
+            onValueChange={() => toggleSetting('darkMode')}
+          />
+        </View>
+      ),
+    },
+    {
+      title: 'Language',
+      renderContent: () => (
+        <View>
+          <Text style={styles.accordionContent}>Current language: {settings.language}</Text>
+          <TouchableOpacity style={styles.actionButton}>
+            <Text style={styles.actionButtonText}>Change Language</Text>
+          </TouchableOpacity>
+        </View>
+      ),
+    },
+    {
+      title: 'Privacy & Security',
+      renderContent: () => (
+        <View style={styles.switchRow}>
+          <Text style={styles.accordionContent}>Send anonymised data to help us improve the app.</Text>
+          <Switch
+            value={settings.dataSharing}
+            onValueChange={() => toggleSetting('dataSharing')}
+          />
+        </View>
+      ),
+    },
+  ];
 
   return (
     <View style={styles.container}>
@@ -57,7 +144,7 @@ export default function ProfileScreen() {
               <Ionicons name={activeSections[index] ? 'chevron-up' : 'chevron-down'} size={20} color="#555" />
             </TouchableOpacity>
             <Collapsible collapsed={!activeSections[index]}>
-              <Text style={styles.accordionContent}>{item.content}</Text>
+              {item.renderContent()}
             </Collapsible>
           </View>
         ))}
@@ -108,6 +195,8 @@ const styles = StyleSheet.create({
   },
   itemText: { fontSize: 16, color: '#000' },
   accordionContent: {
+    flex: 1,
+    textAlign: 'left',
     paddingHorizontal: 24,
     paddingVertical: 12,
     backgroundColor: '#f9f9f9',
@@ -122,5 +211,27 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#d00',
     fontWeight: '500',
+  },
+  actionButton: {
+    backgroundColor: '#007AFF',
+    borderRadius: 8,
+    paddingVertical: 10,
+    paddingHorizontal: 16,
+    marginHorizontal: 24,
+    marginBottom: 12,
+    alignItems: 'center',
+  },
+  actionButtonText: {
+    color: '#fff',
+    fontSize: 14,
+    fontWeight: '600',
+  },
+  switchRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: 24,
+    paddingVertical: 12,
+    backgroundColor: '#f9f9f9',
   },
 });

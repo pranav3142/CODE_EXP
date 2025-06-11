@@ -43,7 +43,7 @@ export default function FirstAidArticle() {
 
                 <Text style={styles.subheading}>3. Encourage Professional Help</Text>
                 <Text style={styles.paragraph}>
-                    Offer to help them find a counselor or go with them to an appointment. Don’t try to fix everything yourself.
+                    Offer to help them find a counsellor or go with them to an appointment. Don’t try to fix everything yourself.
                 </Text>
 
                 <Text style={styles.subheading}>Pro Tip 💡</Text>
