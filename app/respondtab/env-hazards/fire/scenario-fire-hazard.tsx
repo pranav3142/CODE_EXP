@@ -31,7 +31,7 @@ export default function FireHazardScenario() {
       <Stack.Screen options={{ title: 'Response Training' }} />
 
       <Image
-        source={{ uri: 'https://upload.wikimedia.org/wikipedia/commons/7/7e/Bangkok_fire_drill_market.jpg' }}
+        source={require('../../../../assets/images/shoppingmallfire.jpg')}
         style={styles.image}
       />
 

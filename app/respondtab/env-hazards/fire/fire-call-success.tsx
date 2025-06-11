@@ -20,7 +20,7 @@ export default function FireCallSuccessScreen() {
       </View>
 
       <Image
-        source={{ uri: 'https://upload.wikimedia.org/wikipedia/commons/5/52/SCDF_fire_truck.jpg' }}
+        source={require('../../../../assets/images/shoppingmallfire.jpg')}
         style={styles.image}
       />
 

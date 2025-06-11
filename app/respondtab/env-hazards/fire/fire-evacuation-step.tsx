@@ -26,11 +26,11 @@ export default function FireEvacuationStepScreen() {
           <Text style={styles.bannerTitle}>Correct!</Text>
           <Text style={styles.bannerText}>You’ve managed to locate the evacuation route and safely made it outside.</Text>
         </View>
-        <Ionicons name="close" size={16} color="#4caf50" />
+        
       </View>
 
       <Image
-        source={{ uri: 'https://upload.wikimedia.org/wikipedia/commons/4/4b/Northpoint_City_Mall_Singapore.jpg' }}
+        source={require('../../../../assets/images/shoppingmallfire.jpg')}
         style={styles.image}
       />
 

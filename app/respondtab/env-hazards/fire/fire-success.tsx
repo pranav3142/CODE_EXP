@@ -1,26 +1,21 @@
-import React from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView } from 'react-native';
+import React, { useEffect } from 'react';
+import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, Button } from 'react-native';
 import { Stack, useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
+import Toast from 'react-native-toast-message';
 
 export default function FireSuccessScreen() {
   const router = useRouter();
+
+  
 
   return (
     <ScrollView style={styles.container}>
       <Stack.Screen options={{ title: 'Response Training' }} />
 
-      <View style={styles.banner}>
-        <Ionicons name="checkmark-circle" size={20} color="#2e7d32" />
-        <View style={styles.bannerTextContainer}>
-          <Text style={styles.bannerTitle}>Correct!</Text>
-          <Text style={styles.bannerText}>Always ensure yours' and others' safety first by evacuating.</Text>
-        </View>
-        <Ionicons name="close" size={16} color="#4caf50" />
-      </View>
 
       <Image
-        source={{ uri: 'https://upload.wikimedia.org/wikipedia/commons/7/7e/Bangkok_fire_drill_market.jpg' }}
+        source={require('../../../../assets/images/shoppingmallfire.jpg')}
         style={styles.image}
       />
 
@@ -30,7 +25,9 @@ export default function FireSuccessScreen() {
         remember that you can do this by looking for a green “Exit” sign. Press “Next” to begin.
       </Text>
 
-      <TouchableOpacity style={styles.button} onPress={() => router.push('/respondtab/env-hazards/fire/fire-evacuation-step')}>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => router.push('/respondtab/env-hazards/fire/fire-evacuation-step')}>
         <Text style={styles.buttonText}>Next</Text>
       </TouchableOpacity>
     </ScrollView>
@@ -50,21 +47,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 16,
-  },
-  bannerTextContainer: {
-    flex: 1,
-    marginLeft: 8,
-    marginRight: 8,
-  },
-  bannerTitle: {
-    fontWeight: '700',
-    color: '#2e7d32',
-    fontSize: 14,
-    marginBottom: 2,
-  },
-  bannerText: {
-    color: '#2e7d32',
-    fontSize: 13,
   },
   image: {
     width: '100%',
