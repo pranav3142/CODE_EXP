@@ -81,7 +81,7 @@ export default function ProfileScreen() {
       title: 'Appearance',
       renderContent: () => (
         <View style={styles.switchRow}>
-          <Text style={styles.accordionContent}>Toggle light or dark mode.</Text>
+          <Text style={styles.accordionContent}>Toggle dark mode on or off.</Text>
           <Switch
             value={settings.darkMode}
             onValueChange={() => toggleSetting('darkMode')}
